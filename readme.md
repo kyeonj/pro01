@@ -9,8 +9,8 @@
 ![물리적 설계2](./img/data/pro01_04.PNG "물리적 설계2")
 ![클래스 설계](./img/data/pro01_05.PNG "클래스 설계")
 ![기능 설계](./img/data/pro01_06.PNG "기능 설계")
-![DB ERD](./img/data/pro01_07.PNG"DB ERD")
+![DB ERD](./img/data/pro01_07.PNG "DB ERD")
 ![회원가입 시퀀스](./img/data/pro01_08.PNG "회원가입 시퀀스")
-![로그인 시퀀스](./img/data/pro01_09.PNG"로그인 시퀀스")
+![로그인 시퀀스](./img/data/pro01_09.PNG "로그인 시퀀스")
 
 ## 화면설계 
