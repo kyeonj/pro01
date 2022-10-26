@@ -32,7 +32,7 @@
 
     .in_dt { background-color:#fff; height:32px; line-height: 32px; width: 280px; color:#333; font-size: 16px; text-indent:0.5em; }
     .in_btn { display:block; background-color:cornflowerblue; margin-top: 5%; min-width:120px; height: 32px; 
-    line-height: 32px; border-radius:20px; border-color: cornflowerblue; float:left; margin-left:80px; margin-right:20px; cursor:pointer; }
+    line-height: 32px; border-radius:20px; border-color: cornflowerblue; border:1px solid cornflowerblue; float:left; margin-left:150px;  cursor:pointer; }
     .in_btn:hover { background-color:lightpink; border-color: lightpink;}
     
      /* footer */

@@ -6,9 +6,9 @@
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		
-		String sid = (String) session.getAttribute("id");
-		
+		String sid = (String) request.getAttribute("id");
 		int no = Integer.parseInt(request.getParameter("no"));
+		
 		String title = "";
 		String content = "";
 		String uname = "";
@@ -69,27 +69,30 @@
     .page:after { content:""; display:block; clear:both; }
     .page_wrap { width: 1200px; margin: 0 auto; }
  
-    .page_title {padding-top: 1em; text-align: center; margin-top: 50px; color: #333;}
+    .page_title {padding-top: 1em; text-align: center; margin-top: 50px; margin-bottom:-20px; color: #333;}
     .home {color: #333;}
 
-    .frm { border:2px solid darkgray; padding: 24px; width: 780px; margin:50px auto;  }
+    .frm1 { padding: 24px; width: 960px; margin:30px auto; }
 	.tb { display:table; margin:40px auto; width:900px; border-collapse:collapse; }
     .tb tr { display:table-row; }
     .tb td, .tb th { display:table-cell; }
-    .tb th { height: 48px; border-bottom:2px solid #333; border-top:2px solid #333; 
-    color:#fff; background-color:cornflowerblue; }
+    .tb th { height: 48px; border-bottom:1px solid #333; color:#fff; background-color:cornflowerblue;
+    width:150px; border-left:1px solid #333; box-sizing:border-box; }
     .tb td { height: 48px; border-bottom:1px solid #333; text-align:left;
-     border-right:2px solid #333;
+     border-right:1px solid #333;
     width:600px; box-sizing:border-box; padding:8px; }
-	.tb tr:first-child th { border-top:2px solid #333; }
-    .tb tr:first-child td { border-top:2px solid #333; }
-    .tb tr:last-child th { border-bottom:2px solid #333; }
-    .tb tr:last-child td { border-bottom:2px solid #333; }
-	.btn_group { clear:both; width:580px; margin:20px auto; }
+	.tb tr:first-child th { border-top:1px solid #333; }
+    .tb tr:first-child td { border-top:1px solid #333; }
+    .tb tr:last-child th { border-bottom:1px solid #333; }
+    .tb tr:last-child td { border-bottom:1px solid #333; }
+	.btn_group { clear:both;  margin-left: 350px; }
 	.btn_group .btn { display:block; float:left; margin:20px; min-width:100px; padding:8px; font-size:14px;
-	line-height:24px; border-radius:36px; border:2px solid #333; text-align:center; }
-	.btn_group .btn.primary { background-color:#333; color:#fff; }
-	.btn_group .btn.primary:hover { background-color:deepskyblue; }
+	line-height:24px; border-radius:36px; border:1px solid cornflowerblue; text-align:center; }
+	.btn_group .btn:hover { border:1px solid lightpink;}
+	.btn_group .btn.primary { background-color:cornflowerblue; color:#fff; }
+	.btn_group .btn.primary:hover { background-color:lightpink; }
+	.in_data { display:block; float:left; line-height:36px; padding-left:6px; color:#333; background-color:#fff;  border:1px solid #333;}
+	textarea { padding:6px; }
     </style>
     <link rel="stylesheet" href="footer.css">
 </head>
@@ -105,36 +108,38 @@
         <div class="bread">
             <div class="bread_fr">
                 <a href="index.jsp" class="home">HOME</a> &gt;
-                <span class="sel">글 쓰기</span>
+                <span class="sel">글 수정하기</span>
              </div>
         </div>
         <section class="page">
             <div class="page_wrap">
-                <h2 class="page_title">글 쓰기</h2>
+                <h2 class="page_title">글 수정하기</h2>
   				<div class="frm1">
-  					<form name="frm" action="boardWritePro.jsp" method="post" class="frm">
+  					<form name="frm" action="boardModifyPro.jsp" method="post" class="frm">
 	  					<table class="tb">
-	  						<tbody>             
+	  						<tbody>            
+	  							<tr>
+									<th>글 번호</th>
+									<td><%=no %><input type="hidden" name="no" id="no" value="<%=no %>" readonly></td>
+								</tr> 
 								<tr>
 									<th>제목</th>
-									<td><input type="text" name="title" id="title" class="in_data" required /></td>
+									<td><input type="text" name="title" id="title" value="<%=title %>" class="in_data" required /></td>
 								</tr>
 								<tr>
 									<th>내용</th>
 									<td>
-										<textarea cols="100" rows="8" name="content" id="content"></textarea>
+										<textarea cols="100" rows="20" name="content" id="content"><%=content %></textarea>
 									</td>
 								</tr>
 								<tr>
 									<th>작성자</th>
-									<td><%=sid %>
-									<input type="hidden" name="author" id="author" value="<%=sid %>"> 
-									</td>
+									<td><%=uname %></td>
 								</tr>
 							</tbody> 
 						</table>
 						<div class="btn_group">
-							<button type="submit" class="btn primary">글 쓰기</button>
+							<button type="submit" class="btn primary">수정 완료</button>
 							<a href="boardList.jsp" class="btn primary">게시판 목록</a>
 						</div>
 					</form>

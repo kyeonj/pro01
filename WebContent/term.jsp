@@ -26,8 +26,8 @@
     padding: 24px; border:2px solid #eee; height:600px; overflow-y:auto; }
     .btn_fr { width: 900px; margin:30px auto;    padding: 24px; }
     .in_btn { display:block; background-color:cornflowerblue; min-width:120px; height: 32px; 
-    line-height: 32px; border-radius:20px; border-color: cornflowerblue; float:left; margin-left:80px; margin-right:20px; cursor:pointer; }
-    .in_btn:hover { background-color:lightpink; border-color: lightpink }
+    line-height: 32px; border-radius:20px; border-color: cornflowerblue; float:left;  cursor:pointer;  border:1px solid cornflowerblue;}
+    .in_btn:hover { background-color:lightpink; border-color: lightpink; }
      /* footer */
     </style>
     <link rel="stylesheet" href="footer.css">

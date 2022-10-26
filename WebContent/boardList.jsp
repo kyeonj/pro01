@@ -7,7 +7,7 @@
 		response.setContentType("text/html; charset=UTF-8");
 		
 		String sid = (String) session.getAttribute("id");
-		
+		int amount = 0;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -23,9 +23,10 @@
 			sql = "select a.no no, a.title title, a.content content, ";
 			sql = sql + "b.name name, a.resdate resdate ";
 			sql = sql + "from board a inner join member1 b ";
-			sql = sql + "on a.author=b.id order by a.resdate desc";
+			sql = sql + "on a.author=b.id order by a.no desc";
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
+			
 %>
 <!DOCTYPE html>
 <html>
@@ -60,14 +61,25 @@
 	.tb tr th:nth-child(2) { width:200px; text-align:center; }
 	.tb tr th:nth-child(3) { width:200px; text-align:center; }
 	.tb tr th:last-child {width:160px; text-align:center; }
-	.btn_group { clear:both;  margin-right: 100px;}
+	.btn_group { clear:both; }
 	.btn_group .btn { display:block; float:left; margin:20px; min-width:100px; padding:8px; font-size:14px;
 	line-height:24px; border-radius:36px; border:1px solid cornflowerblue; text-align:center; }
 	.btn_group .btn:hover  {border:1px solid lightpink;}
-	.btn_group .btn.primary { background-color:cornflowerblue; color:#fff;  float: right;}
+	.btn_group .btn.primary { background-color:cornflowerblue; color:#fff;  float: right; margin-left: 300px;}
 	.btn_group .btn.primary:hover { background-color:lightpink; }
     </style>
     <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="datatables.min.css">
+    <script src="datatables.min.js"></script>
+    <script>
+	    $(document).ready( function () {
+	        $('#myTable').DataTable();
+	    } );
+    </script>
+    <style>
+    #myTable_filter > label > input[type=search] { color:#333; }
+    #myTable {width: 100%; height: auto;}
+    </style>
 </head>
 <body>
 <div class="wrap">
@@ -88,7 +100,7 @@
             <div class="page_wrap">
                 <h2 class="page_title">고객 문의</h2>
                 	<div class="tb_fr">
-                		<table class="tb">
+                		<table class="tb" id="myTable">
                 			<thead>
                 				<tr>
                 					<th>연번</th>
