@@ -60,14 +60,14 @@
         <div class="bread">
             <div class="bread_fr">
                 <a href="index.jsp" class="home">HOME</a> &gt;
-                <span class="sel">글 쓰기</span>
+                <span class="sel">자주 묻는 질문 글쓰기</span>
              </div>
         </div>
         <section class="page">
             <div class="page_wrap">
-                <h2 class="page_title">글 쓰기</h2>
+                <h2 class="page_title">자주 묻는 질문 글쓰기</h2>
   				<div class="frm1">
-  					<form name="frm" action="boardWritePro.jsp" method="post" class="frm">
+  					<form name="frm" action="faqWritePro.jsp" method="post" class="frm">
 	  					<table class="tb">
 	  						<tbody>             
 								<tr>
@@ -82,15 +82,13 @@
 								</tr>
 								<tr>
 									<th>작성자</th>
-									<td><%=sid %>
-									<input type="hidden" name="author" id="author" value="<%=sid %>"> 
-									</td>
+									<td>admin</td>
 								</tr>
 							</tbody> 
 						</table>
 						<div class="btn_group">
+							<a href="faqList.jsp" class="btn primary">목록으로</a>
 							<button type="submit" class="btn primary">글 쓰기</button>
-							<a href="boardList.jsp" class="btn primary">게시판 목록</a>
 						</div>
 					</form>
 				</div>

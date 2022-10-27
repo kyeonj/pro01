@@ -7,14 +7,7 @@
 		response.setContentType("text/html; charset=UTF-8");
 		
 		String sid = (String) session.getAttribute("id");
-		
-		int no = Integer.parseInt(request.getParameter("no"));
-		String title = "";
-		String content = "";
-		String uname = "";
-		String resdate = "";
-		String author = "";
-		
+		int amount = 0;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -27,27 +20,10 @@
 		try {
 			Class.forName("oracle.jdbc.OracleDriver");
 			con = DriverManager.getConnection(url, dbid, dbpw);
-			sql = "select a.no no, a.title title, a.content content, ";
-			sql = sql + "b.name name, to_char(a.resdate, 'yyyy-MM-dd')";
-			sql = sql + "resdate from board a inner join member1 b ";
-			sql = sql + "on a.author=b.id where a.no=?";
+			sql = "select * from faqa order by parno asc, gubun asc";	
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, no);
 			rs = pstmt.executeQuery();
-			if(rs.next()){
-				title = rs.getString("title");
-				content = rs.getString("content");
-				uname = rs.getString("name");
-				resdate = rs.getString("resdate");
-				author = rs.getString("author");
-			}
-		} catch(Exception e){
-			e.printStackTrace();
-		} finally {
-			rs.close();
-			pstmt.close();
-			con.close();
-		}
+			
 %>
 <!DOCTYPE html>
 <html>
@@ -69,26 +45,36 @@
  
     .page_title {padding-top: 1em; text-align: center; margin-top: 50px; color: #333;}
     .home {color: #333;}
-    .frm { border:2px solid darkgray; padding: 24px; width: 780px;  margin:50px auto;  }
+    .frm { border:2px solid darkgray; padding: 24px; width: 780px; margin:50px auto;  }
 	.tb { display:table; margin:40px auto; width:950px; border-collapse:collapse; }
     .tb tr { display:table-row; }
     .tb td, .tb th { display:table-cell; }
-    .tb th { height: 48px; border-bottom:1px solid #333; 
-    color:#fff; background-color:cornflowerblue;  border-left: 1px solid #333; width:120px; }
-   .tb td { height: 48px; border-bottom:1px solid #333; text-align:left;
-    padding-left:30px; border-right:1px solid #333;  }
-	.tb tr:first-child th { border-top:1px solid #333; }
-    .tb tr:first-child td { border-top:1px solid #333; }
-    .tb tr:last-child th { border-bottom:1px solid #333; }
-    .tb tr:last-child td { border-bottom:1px solid #333; }
-	.btn_group { clear:both; margin-left: 350px; }
+    .tb th { height: 48px; border-bottom:2px solid #333; border-top:2px solid #333; 
+    color:#fff; background-color:cornflowerblue; }
+    .tb td { height: 48px; border-bottom:1px solid #333; text-align:center; }
+	.tb tr th:first-child { width:80px; text-align:center;  }
+	.tb tr th:nth-child(2) { width:200px; text-align:center; }
+	.tb tr th:nth-child(3) { width:200px; text-align:center; }
+	.tb tr th:last-child {width:160px; text-align:center; }
+	.btn_group { clear:both; }
 	.btn_group .btn { display:block; float:left; margin:20px; min-width:100px; padding:8px; font-size:14px;
 	line-height:24px; border-radius:36px; border:1px solid cornflowerblue; text-align:center; }
 	.btn_group .btn:hover  {border:1px solid lightpink;}
-	.btn_group .btn.primary { background-color:cornflowerblue; color:#fff; }
+	.btn_group .btn.primary { background-color:cornflowerblue; color:#fff;  float: right; margin-left: 300px;}
 	.btn_group .btn.primary:hover { background-color:lightpink; }
     </style>
     <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="datatables.min.css">
+    <script src="datatables.min.js"></script>
+    <script>
+	    $(document).ready( function () {
+	        $('#myTable').DataTable();
+	    } );
+    </script>
+    <style>
+    #myTable_filter > label > input[type=search] { color:#333; }
+    #myTable {width: 100%; height: auto;}
+    </style>
 </head>
 <body>
 <div class="wrap">
@@ -102,47 +88,68 @@
         <div class="bread">
             <div class="bread_fr">
                 <a href="index.jsp" class="home">HOME</a> &gt;
-                <span class="sel">문의 내역 상세보기</span>
+                <span class="sel">자주 묻는 질문</span>
             </div>
         </div>
         <section class="page">
             <div class="page_wrap">
-                <h2 class="page_title">문의 내역 상세보기</h2>
+                <h2 class="page_title">자주 묻는 질문</h2>
                 	<div class="tb_fr">
-                		<table class="tb">
-                			<tbody>             
-							<tr>
-								<th>글 번호</th>
-								<td><%=no %></td>
-							</tr>
-							<tr>
-								<th>제목</th>
-								<td><%=title %></td>
-							</tr>
-							<tr>
-								<th>내용</th>
-								<td><%=content %></td>
-							</tr>
-							<tr>
-								<th>작성자</th>
-								<td><%=uname %></td>
-							</tr>
-							<tr>
-								<th>작성일</th>
-								<td><%=resdate %></td>
-							</tr>
+                		<table class="tb" id="myTable">
+                			<thead>
+                				<tr>
+                					<th>연번</th>
+                					<th>제목</th>
+  									<th>작성자</th>
+  									<th>작성일</th>
+                				</tr>
+                			</thead>
+                			<tbody>
+<%
+		int cnt = 0;
+		while(rs.next()){
+			cnt+=1;
+			SimpleDateFormat yymmdd = new SimpleDateFormat("yyyy-MM-dd");
+			String date = yymmdd.format(rs.getDate("resdate"));
+%>
+			<tr>
+					<td><%=cnt %></td>
+					<%
+					if(sid!=null) {
+					%>
+						<td><a href='boardDetail.jsp?no=<%=rs.getInt("no") %>'><%=rs.getString("title") %></a></td>
+					<%
+					} else {
+					%>
+						<td><%=rs.getString("title") %></td>
+					<%
+					}
+					%>
+					<td><%=rs.getString("author") %></td>
+					<td><%=date %></td>
+			</tr>
+<%
+		}
+	} catch(Exception e){
+		e.printStackTrace();
+	} finally {
+		rs.close();
+		pstmt.close();
+		con.close();
+	}
+%>
 						</tbody> 
 					</table>
-						<div class="btn_group">
-							<a href="boardList.jsp" class="btn primary">게시판 목록</a>
-							<!-- 회원이 글 수정할수 있게 해야함. -->
-							<%
-								if(sid.equals("admin") || sid.equals(name)) {
-							%> 
-							<a href='boardModify.jsp?no=<%=no %>' class="btn primary">글 수정</a>
-							<a href='boardDel.jsp?no=<%=no %>' class="btn primary">글 삭제</a>
-							<% } %>
-						</div>
+					<div class="btn_group">
+					<%
+					// 관리자만 글쓸수있게함
+						if(sid.equals("admin")) {
+					%>
+						<a href="faqWrite.jsp" class="btn primary">글 쓰기</a>
+					<%
+						}
+					%>
+					</div>
 				</div>
 			</div>
         </section>

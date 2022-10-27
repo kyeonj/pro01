@@ -19,3 +19,4 @@ insert into board values (bseq.nextval, '테스트 글1', '테스트 글1의 내
   
  -- 글 상세 보기
   select a.no no, a.title title, a.content content, b.name name, to_char(a.resdate, 'yyyy-MM-dd') resdate from board a inner join member1 b on a.author=b.id where a.no=1;
+  

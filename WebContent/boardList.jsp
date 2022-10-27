@@ -20,10 +20,7 @@
 		try {
 			Class.forName("oracle.jdbc.OracleDriver");
 			con = DriverManager.getConnection(url, dbid, dbpw);
-			sql = "select a.no no, a.title title, a.content content, ";
-			sql = sql + "b.name name, a.resdate resdate ";
-			sql = sql + "from board a inner join member1 b ";
-			sql = sql + "on a.author=b.id order by a.no desc";
+			sql = "select * from board order by no desc";
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			
@@ -37,7 +34,6 @@
     <style>
     /* header.css*/
     .hd { position:fixed; }
-
     /* content */
     .vs { clear:both; width: 100%; height: 500px; overflow: hidden;}
     .vs img { display:block; width: 1200px; height:auto; margin: auto; }
@@ -49,7 +45,6 @@
  
     .page_title {padding-top: 1em; text-align: center; margin-top: 50px; color: #333;}
     .home {color: #333;}
-
     .frm { border:2px solid darkgray; padding: 24px; width: 780px; margin:50px auto;  }
 	.tb { display:table; margin:40px auto; width:950px; border-collapse:collapse; }
     .tb tr { display:table-row; }
@@ -130,7 +125,7 @@
 					<%
 					}
 					%>
-					<td><%=rs.getString("name") %></td>
+					<td><%=rs.getString("author") %></td>
 					<td><%=date %></td>
 			</tr>
 <%

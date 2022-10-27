@@ -59,7 +59,6 @@
     <style>
     /* header.css*/
     .hd { position:fixed; }
-
     /* content */
     .vs { clear:both; width: 100%; height: 500px; overflow: hidden;}
     .vs img { display:block; width: 1200px; height:auto; margin: auto; }
@@ -71,7 +70,6 @@
  
     .page_title {padding-top: 1em; text-align: center; margin-top: 50px; margin-bottom:-20px; color: #333;}
     .home {color: #333;}
-
     .frm1 { padding: 24px; width: 960px; margin:30px auto; }
 	.tb { display:table; margin:40px auto; width:900px; border-collapse:collapse; }
     .tb tr { display:table-row; }
