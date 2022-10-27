@@ -7,7 +7,10 @@
 		response.setContentType("text/html; charset=UTF-8");
 		
 		String sid = (String) session.getAttribute("id");
-		int amount = 0;
+		if(sid==null){
+			sid="guest";	
+		}
+		
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -16,7 +19,7 @@
 		String dbid = "system";
 		String dbpw = "1234";
 		String sql = "";
-		
+		int cnt = 0;
 		try {
 			Class.forName("oracle.jdbc.OracleDriver");
 			con = DriverManager.getConnection(url, dbid, dbpw);
@@ -88,12 +91,12 @@
         <div class="bread">
             <div class="bread_fr">
                 <a href="index.jsp" class="home">HOME</a> &gt;
-                <span class="sel">자주 묻는 질문</span>
+                <span class="sel">자주하는 질문 및 답변</span>
             </div>
         </div>
         <section class="page">
             <div class="page_wrap">
-                <h2 class="page_title">자주 묻는 질문</h2>
+                <h2 class="page_title">자주하는 질문 및 답변</h2>
                 	<div class="tb_fr">
                 		<table class="tb" id="myTable">
                 			<thead>
@@ -106,7 +109,6 @@
                 			</thead>
                 			<tbody>
 <%
-		int cnt = 0;
 		while(rs.next()){
 			cnt+=1;
 			SimpleDateFormat yymmdd = new SimpleDateFormat("yyyy-MM-dd");
@@ -114,17 +116,13 @@
 %>
 			<tr>
 					<td><%=cnt %></td>
-					<%
-					if(sid!=null) {
-					%>
-						<td><a href='boardDetail.jsp?no=<%=rs.getInt("no") %>'><%=rs.getString("title") %></a></td>
-					<%
-					} else {
-					%>
-						<td><%=rs.getString("title") %></td>
-					<%
-					}
-					%>
+					<td>
+					<% if(rs.getInt("gubun")==0) { %>
+						<a href='faqDetail.jsp?no=<%=rs.getInt("no") %>'><%=rs.getString("title") %></a>
+					<% } else { %>
+						<a href='faqDetail.jsp?no=<%=rs.getInt("no") %>' style="padding-left:36px;"><%=rs.getString("title") %></a>
+					<% } %>
+					</td>
 					<td><%=rs.getString("author") %></td>
 					<td><%=date %></td>
 			</tr>
@@ -141,15 +139,11 @@
 						</tbody> 
 					</table>
 					<div class="btn_group">
-					<%
-					// 관리자만 글쓸수있게함
-						if(sid.equals("admin")) {
-					%>
-						<a href="faqWrite.jsp" class="btn primary">글 쓰기</a>
-					<%
-						}
-					%>
-					</div>
+						<% if(sid.equals("admin")) { %>
+						<a href="faqWrite.jsp" class="btn primary">자주하는 질문 및 답변 등록</a>
+						<% } %>
+					</div>	
+				</div>
 				</div>
 			</div>
         </section>
