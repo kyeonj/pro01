@@ -88,12 +88,12 @@
         <div class="bread">
             <div class="bread_fr">
                 <a href="index.jsp" class="home">HOME</a> &gt;
-                <span class="sel">고객 문의</span>
+                <span class="sel">A/S 신청</span>
             </div>
         </div>
         <section class="page">
             <div class="page_wrap">
-                <h2 class="page_title">고객 문의</h2>
+                <h2 class="page_title">A/S 신청</h2>
                 	<div class="tb_fr">
                 		<table class="tb" id="myTable">
                 			<thead>
@@ -144,7 +144,7 @@
 					<%
 						if(sid!=null) {
 					%>
-						<a href="boardWrite.jsp" class="btn primary">글 쓰기</a>
+						<a href="boardWrite.jsp" class="btn primary">A/S 신청하기</a>
 					<%
 						}
 					%>

@@ -28,8 +28,8 @@
 			Class.forName("oracle.jdbc.OracleDriver");
 			con = DriverManager.getConnection(url, dbid, dbpw);
 			sql = "select a.no no, a.title title, a.content content, ";
-			sql = sql + "b.name name, to_char(a.resdate, 'yyyy-MM-dd')";
-			sql = sql + "resdate from board a inner join member1 b ";
+			sql = sql + "b.name name, a.resdate resdate, a.author author ";
+			sql = sql + "from board a inner join member1 b ";
 			sql = sql + "on a.author=b.id where a.no=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, no);
@@ -86,7 +86,7 @@
 	line-height:24px; border-radius:36px; border:1px solid cornflowerblue; text-align:center; }
 	.btn_group .btn:hover  {border:1px solid lightpink;}
 	.btn_group .btn.primary { background-color:cornflowerblue; color:#fff; }
-	.btn_group .btn.primary:hover { background-color:lightpink; }
+	.btn_group .btn.primary:hover { background-color:lightpink; } 
     </style>
     <link rel="stylesheet" href="footer.css">
 </head>
@@ -102,12 +102,12 @@
         <div class="bread">
             <div class="bread_fr">
                 <a href="index.jsp" class="home">HOME</a> &gt;
-                <span class="sel">문의 내역 상세보기</span>
+                <span class="sel">A/S신청 상세보기</span>
             </div>
         </div>
         <section class="page">
             <div class="page_wrap">
-                <h2 class="page_title">문의 내역 상세보기</h2>
+                <h2 class="page_title">A/S신청 상세보기</h2>
                 	<div class="tb_fr">
                 		<table class="tb">
                 			<tbody>             
@@ -134,10 +134,9 @@
 						</tbody> 
 					</table>
 						<div class="btn_group">
-							<a href="boardList.jsp" class="btn primary">게시판 목록</a>
-							<!-- 회원이 글 수정할수 있게 해야함. -->
+							<a href="boardList.jsp" class="btn primary">목록으로</a>
 							<%
-								if(sid.equals("admin") || sid.equals(name)) {
+								if(sid.equals("admin") || sid.equals(author)) {
 							%> 
 							<a href='boardModify.jsp?no=<%=no %>' class="btn primary">글 수정</a>
 							<a href='boardDel.jsp?no=<%=no %>' class="btn primary">글 삭제</a>

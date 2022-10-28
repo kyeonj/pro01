@@ -2,12 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.*, java.sql.*" %>    
 <%
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8");
-		
-		String sid = (String) request.getAttribute("id");
-		int no = Integer.parseInt(request.getParameter("no"));
+		String sid = (String) session.getAttribute("id");
 %>
 <!DOCTYPE html>
 <html>
@@ -65,57 +60,55 @@
         <div class="bread">
             <div class="bread_fr">
                 <a href="index.jsp" class="home">HOME</a> &gt;
-                <span class="sel">글 수정하기</span>
+                <span class="sel">Q&A 질문 글 쓰기</span>
              </div>
         </div>
         <section class="page">
             <div class="page_wrap">
-                <h2 class="page_title">글 수정하기</h2>
-                <%@ include file="connectionPool1.conf" %>
-                <%
-				sql = "select * from faqa where no=?";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, no);
-				rs = pstmt.executeQuery();
-				if(rs.next()){
-				%>
+                <h2 class="page_title">Q&A 질문 글 쓰기</h2>
   				<div class="frm1">
-				<form name="frm" class="frm" action="faqModifyPro.jsp" method="post">
-					<input type="hidden" name="no" id="no" value='<%=rs.getInt("no") %>' required>
+				<form name="frm" class="frm" action="qnaWritePro.jsp" method="post">
 					<table class="tb">
 						<tbody>
 							<tr>
-								<th><label for="title">제목</label></th>
-								<td><input type="text" name="title" id="title" placeholder="제목 입력" class="in_data" value='<%=rs.getString("title") %>' required></td>
+								<th><label for="title">질문 제목</label></th>
+								<td><input type="text" name="title" id="title" placeholder="제목 입력" maxlength="100" class="in_data" required></td>
 							</tr>
 							<tr>
-								<th><label for="content">내용</label></th>
+								<th><label for="content">질문 내용</label></th>
 								<td>
-									<textarea cols="100" rows="20" name="content" id="content" class="in_data2"><%=rs.getString("content") %></textarea>
+									<textarea cols="100" rows="20" name="content" id="content" maxlength="600" class="in_data2"></textarea>
 								</td>
 							</tr>
 							<tr>
 								<th><label for="author">작성자</label></th>
-								<td><%=rs.getString("author") %></td>
+								<td>
+									<input type="text" name="author" id="author" class="in_data" value='<%=sid %>' readonly required>
+									<input type="hidden" name="lev" id="lev" value="0">
+								</td>
+							</tr>
+							<tr>
+								<th><label for="sec1">비밀글 여부</label></th>
+								<td>
+									<input type="radio" name="sec" id="sec1" value="N" checked>
+									<label for="">공개</label>
+									<input type="radio" name="sec" id="sec2" value="Y">
+									<label for="">비밀글</label>
+								</td>
 							</tr>
 						</tbody>
 					</table>
-				<%
-					}
-				%>
-				<%@ include file="connectionClose1.conf" %>
 					<div class="btn_group">
-						<button type="submit" class="btn primary">글 수정</button>
-						<a href="faq.jsp" class="btn primary">목록으로</a>
+						<button type="submit" class="btn primary">글 쓰기</button>
+						<a href="qnaList.jsp" class="btn primary">목록으로</a>
 					</div>
-					</form>
-				</div>
+				</form>
 			</div>
-        </section>
-    </div>
-    <footer class="ft">
-		<%@ include file="footer.jsp" %>
-    </footer>
+		</div>
+	</section>
 </div>
+<footer class="ft">
+	<%@ include file="footer.jsp" %>
+</footer>
 </body>
 </html>

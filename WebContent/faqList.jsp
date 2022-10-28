@@ -91,12 +91,12 @@
         <div class="bread">
             <div class="bread_fr">
                 <a href="index.jsp" class="home">HOME</a> &gt;
-                <span class="sel">자주하는 질문 및 답변</span>
+                <span class="sel">자주묻는질문</span>
             </div>
         </div>
         <section class="page">
             <div class="page_wrap">
-                <h2 class="page_title">자주하는 질문 및 답변</h2>
+                <h2 class="page_title">자주묻는질문</h2>
                 	<div class="tb_fr">
                 		<table class="tb" id="myTable">
                 			<thead>
@@ -118,9 +118,9 @@
 					<td><%=cnt %></td>
 					<td>
 					<% if(rs.getInt("gubun")==0) { %>
-						<a href='faqDetail.jsp?no=<%=rs.getInt("no") %>'><%=rs.getString("title") %></a>
+						<a href='faqDetail.jsp?no=<%=rs.getInt("no") %>' ><%=rs.getString("title") %></a>
 					<% } else { %>
-						<a href='faqDetail.jsp?no=<%=rs.getInt("no") %>' style="padding-left:36px;"><%=rs.getString("title") %></a>
+						<a href='faqDetail.jsp?no=<%=rs.getInt("no") %>' style="padding-left:130px;"><%=rs.getString("title") %></a>
 					<% } %>
 					</td>
 					<td><%=rs.getString("author") %></td>
@@ -140,7 +140,7 @@
 					</table>
 					<div class="btn_group">
 						<% if(sid.equals("admin")) { %>
-						<a href="faqWrite.jsp" class="btn primary">자주하는 질문 및 답변 등록</a>
+						<a href="faqWrite.jsp" class="btn primary">글쓰기</a>
 						<% } %>
 					</div>	
 				</div>

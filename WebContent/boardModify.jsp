@@ -106,12 +106,12 @@
         <div class="bread">
             <div class="bread_fr">
                 <a href="index.jsp" class="home">HOME</a> &gt;
-                <span class="sel">글 수정하기</span>
+                <span class="sel">A/S 신청 수정하기</span>
              </div>
         </div>
         <section class="page">
             <div class="page_wrap">
-                <h2 class="page_title">글 수정하기</h2>
+                <h2 class="page_title">A/S 신청 수정하기</h2>
   				<div class="frm1">
   					<form name="frm" action="boardModifyPro.jsp" method="post" class="frm">
 	  					<table class="tb">
@@ -138,7 +138,7 @@
 						</table>
 						<div class="btn_group">
 							<button type="submit" class="btn primary">수정 완료</button>
-							<a href="boardList.jsp" class="btn primary">게시판 목록</a>
+							<a href="boardList.jsp" class="btn primary">목록으로</a>
 						</div>
 					</form>
 				</div>

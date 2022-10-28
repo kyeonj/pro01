@@ -60,24 +60,24 @@
         <div class="bread">
             <div class="bread_fr">
                 <a href="index.jsp" class="home">HOME</a> &gt;
-                <span class="sel">글 쓰기</span>
+                <span class="sel">A/S 신청 글쓰기</span>
              </div>
         </div>
         <section class="page">
             <div class="page_wrap">
-                <h2 class="page_title">글 쓰기</h2>
+                <h2 class="page_title">A/S 신청 글쓰기</h2>
   				<div class="frm1">
   					<form name="frm" action="boardWritePro.jsp" method="post" class="frm">
 	  					<table class="tb">
 	  						<tbody>             
 								<tr>
 									<th>제목</th>
-									<td><input type="text" name="title" id="title" class="in_data" required /></td>
+									<td><input type="text" name="title" id="title" class="in_data" placeholder="제목을 입력해주세요" required autofocus /></td>
 								</tr>
 								<tr>
 									<th>내용</th>
 									<td>
-										<textarea cols="100" rows="20" name="content" id="content"></textarea>
+										<textarea cols="100" rows="20" name="content" id="content" placeholder="내용을 입력해주세요" required></textarea>
 									</td>
 								</tr>
 								<tr>
@@ -90,7 +90,7 @@
 						</table>
 						<div class="btn_group">
 							<button type="submit" class="btn primary">글 쓰기</button>
-							<a href="boardList.jsp" class="btn primary">게시판 목록</a>
+							<a href="boardList.jsp" class="btn primary">목록으로</a>
 						</div>
 					</form>
 				</div>

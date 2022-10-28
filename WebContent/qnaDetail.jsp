@@ -9,6 +9,7 @@
 		String sid = (String) session.getAttribute("id");
 		
 		int no = Integer.parseInt(request.getParameter("no"));
+		
 %>
 <!DOCTYPE html>
 <html>
@@ -46,7 +47,7 @@
 	.btn_group .btn { display:block; float:left; margin:20px; min-width:100px; padding:8px; font-size:14px;
 	line-height:24px; border-radius:36px; border:1px solid cornflowerblue; text-align:center; }
 	.btn_group .btn:hover  {border:1px solid lightpink;}
-	.btn_group .btn.primary { background-color:cornflowerblue; color:#fff; }
+	.btn_group .btn.primary { background-color:cornflowerblue; color:#fff; margin-left: 10px;}
 	.btn_group .btn.primary:hover { background-color:lightpink; }
     </style>
     <link rel="stylesheet" href="footer.css">
@@ -64,31 +65,44 @@
         <div class="bread">
             <div class="bread_fr">
                 <a href="index.jsp" class="home">HOME</a> &gt;
-                <span class="sel">글 상세보기</span>
+                <span class="sel">QnA 상세보기</span>
             </div>
         </div>
         <section class="page">
             <div class="page_wrap">
-                <h2 class="page_title">글 상세보기</h2>
+                <h2 class="page_title">QnA 상세보기</h2>
                 	<div class="tb_fr">
                 		<table class="tb">
  <%
-				sql = "select * from faqa where no=?";
+				sql = "select * from qnaa where no=?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, no);
 				rs = pstmt.executeQuery();
 				String author = ""; 
 				if(rs.next()){
+				
  %>
-                			<tbody>             
-							<tr>
-			<th>구분</th>
+   						<tbody>  
+  							<tr>
+								<th>구분</th>
 								<td>
 								<%
-								if(rs.getInt("gubun")==0){
+								if(rs.getInt("lev")==0){
 									out.println("<span>질문</span>");
 								} else {
 									out.println("<span>답변</span>");
+								}
+								%>
+								</td>
+							</tr>
+  							<tr>
+								<th>공개여부</th>
+								<td>
+								<%
+								if(rs.getString("sec").equals("Y")){
+									out.println("<span>비공개</span>");
+								} else {
+									out.println("<span>공개</span>");
 								}
 								%>
 								</td>
@@ -103,25 +117,41 @@
 							</tr>
 							<tr>
 								<th>작성자</th>
-								<td>관리자</td>
+								<td><%=rs.getString("author") %></td>
 							</tr>
 							<tr>
 								<th>작성일</th>
 								<td><%=rs.getString("resdate") %></td>
 							</tr>
 						</tbody> 
-					<%
-							}
-					%>
 					</table>
 					<div class="btn_group">
-						<a href="faqList.jsp" class="btn primary">목록으로</a>
+						<a href="qnaList.jsp" class="btn primary">질문 및 답변 목록</a>
 						<%
 							if(sid.equals("admin")) {
+								if(rs.getInt("lev")==0){
 						%>
-						<a href='faqModify.jsp?no=<%=no %>' class="btn primary">글 수정</a>
-						<a href='faqDel.jsp?no=<%=no %>' class="btn primary">글 삭제</a>
-						<% } %>
+							<a href='replyWrite.jsp?parno=<%=no %>' class="btn primary">답변 하기</a>
+							<a href='qnaModify.jsp?no=<%=no %>' class="btn primary">글 수정</a>
+							<a href='qnaDel.jsp?parno=<%=no %>' class="btn primary">글 삭제</a>
+						<%
+								} else {
+						%>
+							<a href='replyModify.jsp?no=<%=no %>' class="btn primary">답글 수정</a>
+							<a href='replyDel.jsp?no=<%=no %>' class="btn primary">답글 삭제</a>
+						<%
+								}
+							} else if(sid.equals(rs.getString("author"))){
+						%>
+							<a href='qnaModify.jsp?no=<%=no %>' class="btn primary">글 수정</a>
+							<a href='qnaDel.jsp?parno=<%=no %>' class="btn primary">글 삭제</a>
+						<%		
+							} else {
+						%>
+							<p style="clear:both">글 작성자가 아닙니다.</p>
+						<%
+							}
+						%>
 					</div>
 				</div>
 			</div>
@@ -131,6 +161,9 @@
 		<%@ include file="footer.jsp" %>
     </footer>
 </div>
+					<%
+							}
+					%>
 <%@ include file="connectionClose1.conf" %>
 </body>
 </html>

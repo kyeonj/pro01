@@ -1,35 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.*, java.sql.*" %>
+<%@ page import="java.util.Date, java.sql.*, java.text.*" %>
 <%
 	//캐릭터셋 설정
 	request.setCharacterEncoding("UTF-8");
 	response.setCharacterEncoding("UTF-8");
 	response.setContentType("text/html; charset=UTF-8");
 	//보내온 데이터 받아오기
-	int no = Integer.parseInt(request.getParameter("no"));
-	String title = request.getParameter("title");
-	String content = request.getParameter("content");
-	
+	int parno = Integer.parseInt(request.getParameter("parno"));	
 	int cnt = 0;
 %>
 	<!-- DB 생성 및 연결 -->
 <%@ include file="connectionPool2.conf" %>
 <%
 	//SQL 작성 및 실행
-	sql = "update faqa set title=?, content=? where no=?";
+	sql = "delete from qnaa where parno=?";
 	pstmt = con.prepareStatement(sql);
-	pstmt.setString(1, title);
-	pstmt.setString(2, content);
-	pstmt.setInt(3, no);
+	pstmt.setInt(1, parno);
 	cnt = pstmt.executeUpdate();
 	
 	//반환된 결과에 따라 분기
 	if(cnt>=1){
-		response.sendRedirect("faqList.jsp");
+		response.sendRedirect("qnaList.jsp");
 	} else {
-		response.sendRedirect("faqModify.jsp?no="+no);
+		response.sendRedirect("qnaDetail.jsp?no="+parno);
 	}
 %>
-	<!-- DB 닫기 -->
+<!-- DB 닫기 -->
 <%@ include file="connectionClose2.conf" %>

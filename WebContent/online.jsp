@@ -2,12 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.*, java.sql.*" %>    
 <%
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8");
-		
-		String sid = (String) request.getAttribute("id");
-		int no = Integer.parseInt(request.getParameter("no"));
+		String sid = (String) session.getAttribute("id");
 %>
 <!DOCTYPE html>
 <html>
@@ -65,51 +60,69 @@
         <div class="bread">
             <div class="bread_fr">
                 <a href="index.jsp" class="home">HOME</a> &gt;
-                <span class="sel">글 수정하기</span>
+                <span class="sel">이메일 상담</span>
              </div>
         </div>
         <section class="page">
             <div class="page_wrap">
-                <h2 class="page_title">글 수정하기</h2>
-                <%@ include file="connectionPool1.conf" %>
-                <%
-				sql = "select * from faqa where no=?";
+                <h2 class="page_title">이메일 상담 하기</h2>
+               <p style="clear:both">작성하여 보내신 내용은 관리자 이메일로 보내지며, 내용을 확인 후 별도 개별적으로 3일 이내 연락드립니다.</p>
+  				<%@ include file="connectionPool1.conf" %>
+				<%
+				sql = "select * from member1 where id=?";
 				pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, no);
+				pstmt.setString(1, sid);
+				//select된 데이터가 없으면, rs=null이 됨
 				rs = pstmt.executeQuery();
+				//int cnt = pstmt.executeUpdate();
+				
 				if(rs.next()){
+					
 				%>
   				<div class="frm1">
-				<form name="frm" class="frm" action="faqModifyPro.jsp" method="post">
-					<input type="hidden" name="no" id="no" value='<%=rs.getInt("no") %>' required>
+				<form name="frm" class="frm" action="onlinePro.jsp" method="post">
 					<table class="tb">
 						<tbody>
 							<tr>
-								<th><label for="title">제목</label></th>
-								<td><input type="text" name="title" id="title" placeholder="제목 입력" class="in_data" value='<%=rs.getString("title") %>' required></td>
-							</tr>
-							<tr>
-								<th><label for="content">내용</label></th>
+								<th><label for="author">작성자명</label></th>
 								<td>
-									<textarea cols="100" rows="20" name="content" id="content" class="in_data2"><%=rs.getString("content") %></textarea>
+									<input type="text" name="name" id="name" class="in_data" value='<%=rs.getString("name") %>' required>
 								</td>
 							</tr>
 							<tr>
-								<th><label for="author">작성자</label></th>
-								<td><%=rs.getString("author") %></td>
+								<th><label for="from">이메일 주소</label></th>
+								<td>
+									<input type="email" name="from" id="from" class="in_data" value='<%=rs.getString("email") %>' required >
+								</td>
+							</tr>
+							<tr>
+								<th><label for="tel">연락처</label></th>
+								<td>
+									<input type="tel" name="tel" id="tel" class="in_data" value='<%=rs.getString("tel") %>' required >
+								</td>
+							</tr>
+							<tr>
+								<th><label for="title">상담 제목</label></th>
+								<td><input type="text" name="title" id="title" placeholder="제목 입력" class="in_data" required></td>
+							</tr>
+							<tr>
+								<th><label for="content">상담 내용</label></th>
+								<td>
+									<textarea cols="100" rows="10" name="content" id="content" class="in_data2"></textarea>
+								</td>
 							</tr>
 						</tbody>
 					</table>
-				<%
-					}
-				%>
-				<%@ include file="connectionClose1.conf" %>
 					<div class="btn_group">
-						<button type="submit" class="btn primary">글 수정</button>
-						<a href="faq.jsp" class="btn primary">목록으로</a>
+						<button type="submit" class="btn primary">상담 받기</button>
+						<a href="qnaList.jsp" class="btn primary">질문 및 답변으로</a>
 					</div>
-					</form>
+				</form>
 				</div>
+					<%
+					}
+					%>
+					<%@ include file="connectionClose1.conf" %>
 			</div>
         </section>
     </div>
