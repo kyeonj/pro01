@@ -77,12 +77,12 @@ try {
     </style>
     <link rel="stylesheet" href="footer.css">
     <link rel="stylesheet" href="datatables.min.css">
-    <!-- <script src="datatables.min.js"></script>
+    <!--<script src="datatables.min.js"></script>
     <script>
 	    $(document).ready( function () {
 	        $('#myTable').DataTable();
 	    } );
-    </script> -->
+    </script> --> 
     <style>
     #myTable_filter > label > input[type=search] { color:#333; }
     #myTable {width: 100%; height: auto;}

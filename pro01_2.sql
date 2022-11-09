@@ -61,4 +61,5 @@ delete from board where no=1;
 -- delete from board where no=?;
 -- pstmt.setInt(1, no);
   
+insert into board values (bseq.nextval, 'aaa','aaa','aaa', sysdate);
 select sysdate now from dual;

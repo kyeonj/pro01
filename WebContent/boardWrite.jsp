@@ -67,7 +67,7 @@
             <div class="page_wrap">
                 <h2 class="page_title">A/S 신청 글쓰기</h2>
   				<div class="frm1">
-  					<form name="frm" action="boardWritePro.jsp" method="post" class="frm">
+  					<form name="frm" action="boardWritePro.jsp" method="post" >
 	  					<table class="tb">
 	  						<tbody>             
 								<tr>
